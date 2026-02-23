@@ -1,17 +1,17 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 # ignore duplicates in history
 # history commands:
 #   !XX to run history command number XX
 #   !! rerun last command
-export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
+setopt HIST_IGNORE_DUPS
 export HISTSIZE=100000
 export HISTTIMEFORMAT="%Y-%m-%d %T "
 export EDITOR=vim
 umask 077 # newly created files / folders will be private
 
 # setup fuzzy find if it exists
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # setup better ls colors if configured
 # if [[ -e ~/.dircolors ]]; then
@@ -20,7 +20,7 @@ umask 077 # newly created files / folders will be private
 #   eval "$(dircolors -b)"
 # fi
 
-alias rc='${EDITOR} ~/.bashrc'
+alias rc='${EDITOR} ~/.zshrc'
 
 # ---------- datetime
 alias datestamp='date +"%Y-%m-%d_%H-%M-%S"'
@@ -67,7 +67,6 @@ alias ll="ls -AlhX --color=auto"
 function lf() { # find + ls
   find . -maxdepth 1 -name "$@" -type f -exec ls -AlhX {} \;
 }
-export -f lf
 
 function grepr() {
   pattern=$1
@@ -111,7 +110,6 @@ alias bell='sleep 1 ; echo -e "\a"'
 function killallother() {
   ps -u "$USER" -o pid=,comm=  | grep -vE 'grep|bash|ssh|tmux|ps|nvitop' | awk '{print $1}' | xargs kill -9
 }
-export -f killallother
 
 alias pdfcompressghostscript="gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 \
    -dPDFSETTINGS=/ebook \

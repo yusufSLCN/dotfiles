@@ -1,13 +1,24 @@
 #!/usr/bin/env bash
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Get the directory of the current script (Works in both Bash and Zsh)
+if [ -n "$ZSH_VERSION" ]; then
+    SCRIPT_DIR="${0:a:h}"
+else
+    SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+fi
 
-source "$SCRIPT_DIR/bash/00-colors.sh"
-source "$SCRIPT_DIR/bash/bash.sh"
-source "$SCRIPT_DIR/bash/conda.sh"
-source "$SCRIPT_DIR/bash/git.sh"
-source "$SCRIPT_DIR/bash/prompt.sh"
-source "$SCRIPT_DIR/bash/setfacl.sh"
-source "$SCRIPT_DIR/bash/slurm.sh"
-source "$SCRIPT_DIR/bash/tmux.sh"
-source "$SCRIPT_DIR/bash/zstd.sh"
+if [ -n "$ZSH_VERSION" ]; then
+    SHELL_DIR="zsh"
+else
+    SHELL_DIR="bash"
+fi
+
+source "$SCRIPT_DIR/$SHELL_DIR/00-colors.sh"
+source "$SCRIPT_DIR/$SHELL_DIR/bash.sh"
+source "$SCRIPT_DIR/$SHELL_DIR/conda.sh"
+source "$SCRIPT_DIR/$SHELL_DIR/git.sh"
+source "$SCRIPT_DIR/$SHELL_DIR/prompt.sh"
+source "$SCRIPT_DIR/$SHELL_DIR/setfacl.sh"
+source "$SCRIPT_DIR/$SHELL_DIR/slurm.sh"
+source "$SCRIPT_DIR/$SHELL_DIR/tmux.sh"
+source "$SCRIPT_DIR/$SHELL_DIR/zstd.sh"
