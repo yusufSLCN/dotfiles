@@ -30,6 +30,8 @@ Short summary line (50 chars or less)
 - Use imperative mood ("add", "fix", "remove" — not "added", "fixed").
 - Keep the summary line under 50 characters.
 - Use bullet points for additional detail.
+- Stage files explicitly by path — never `git add -A` or `git add .`.
 - Do NOT stage files that look like secrets (.env, credentials, tokens).
-- Run `ruff check` before committing. If it reports errors, fix them first.
-- Run `python -m pytest --tb=short` before committing. Do not commit if tests fail.
+- Before committing, run `uv run ruff format --check .` and `uv run ruff check .`. If either reports issues, fix them and re-stage.
+- If the project has a `tests/` directory, run `uv run pytest --tb=short` before committing. Do not commit if tests fail.
+- If a pre-commit hook fails, the commit did NOT happen — fix the issue, re-stage, and create a NEW commit. Do NOT use `--amend`.
